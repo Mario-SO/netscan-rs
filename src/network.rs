@@ -1,5 +1,5 @@
 use pnet::datalink::MacAddr;
-use pnet::datalink::{DataLinkReceiver, DataLinkSender, NetworkInterface};
+use pnet::datalink::{self, Channel, DataLinkReceiver, DataLinkSender, NetworkInterface};
 use pnet::packet::arp::{ArpHardwareTypes, ArpOperations, ArpPacket, MutableArpPacket};
 use pnet::packet::ethernet::{EtherTypes, EthernetPacket, MutableEthernetPacket};
 use pnet::packet::{MutablePacket, Packet};
@@ -66,4 +66,20 @@ pub fn send_arp_request(
     }
 
     None
+}
+
+pub fn create_datalink_channel(
+    interface: &NetworkInterface,
+) -> Result<
+    (
+        Box<dyn datalink::DataLinkSender>,
+        Box<dyn datalink::DataLinkReceiver>,
+    ),
+    String,
+> {
+    match datalink::channel(interface, Default::default()) {
+        Ok(Channel::Ethernet(tx, rx)) => Ok((tx, rx)),
+        Ok(_) => Err("Unhandled channel type".to_string()),
+        Err(e) => Err(e.to_string()),
+    }
 }
