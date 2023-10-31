@@ -30,17 +30,16 @@ cargo build --release
 
 To run the ARP Network Scanner, use the following command:
 ```
-cargo run --release <network_interface_name>
+cargo build --release
+sudo ./target/release/scan-rs
 ```
-
-Replace `<network_interface_name>` with the name of the network interface you want to scan on. For example, `eth0` or `wlan0`.
-
 See your available network interfaces using `arp -a` on *NIX systems
 
 ## Dependencies 📦
 
 - `pnet` - Packet manipulation and network interfaces.
 - `indicatif` - Progress bar handling.
+- `dialoguer` - Good looking terminal interactions.
 - `console` - Styled console output.
 - `ipnetwork` - Handling IP networks.
 
