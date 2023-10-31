@@ -4,7 +4,6 @@ extern crate ipnetwork;
 extern crate pnet;
 
 use ipnetwork::Ipv4Network;
-use std::env;
 
 mod network;
 mod ui;
@@ -12,7 +11,8 @@ mod utils;
 
 fn main() {
     ui::init();
-    let interface_name = env::args().nth(1).unwrap();
+
+    let interface_name = ui::select_interface();
     let interface = match utils::get_interface_by_name(&interface_name) {
         Some(iface) => iface,
         None => {
@@ -47,5 +47,5 @@ fn main() {
             None => {}
         }
     }
-    pb.finish_with_message("🎉 Scan complete! 🎉");
+    // pb.finish_with_message("🎉 Scan complete! 🎉");
 }

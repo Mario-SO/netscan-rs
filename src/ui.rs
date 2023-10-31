@@ -1,4 +1,5 @@
 use console::{style, Emoji, Style, Term};
+use dialoguer::{theme::ColorfulTheme, Input};
 use indicatif::{ProgressBar, ProgressStyle};
 use std::net::Ipv4Addr;
 
@@ -9,6 +10,13 @@ pub fn init() {
     // Header
     println!("{}", style("scan_rs by mariodev").bold().underlined());
     println!();
+}
+
+pub fn select_interface() -> String {
+    Input::with_theme(&ColorfulTheme::default())
+        .with_prompt("Enter the interface name")
+        .interact()
+        .unwrap()
 }
 
 pub fn print_error(message: &str) {
@@ -29,6 +37,7 @@ pub fn print_scanning_message(interface_name: &str) {
     let blue = Style::new().blue();
     let info_mark = Emoji("💡 ", "");
 
+    println!();
     println!(
         "{}Scanning on interface: {}",
         bold.apply_to(blue.apply_to(info_mark)),
