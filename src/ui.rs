@@ -58,16 +58,16 @@ pub fn create_progress_bar(total_ips: u64) -> ProgressBar {
     pb
 }
 
-pub fn print_device_found(ip: Ipv4Addr, mac: &str) {
+pub fn print_device_found(pb: &ProgressBar, ip: Ipv4Addr, mac: &str) {
     let green = Style::new().green();
     let yellow = Style::new().yellow();
     let blue = Style::new().blue();
     let check_mark = Emoji("✅ ", "");
 
-    println!(
+    pb.println(format!(
         "{}Found device with IP: {}, MAC: {}",
         green.apply_to(check_mark),
         yellow.apply_to(ip),
         blue.apply_to(mac)
-    );
+    ));
 }

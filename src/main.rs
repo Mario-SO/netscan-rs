@@ -42,10 +42,11 @@ fn main() {
 
         match network::send_arp_request(&mut *tx, &mut *rx, ipv4_addr, ip, &interface) {
             Some(mac) => {
-                ui::print_device_found(ip, &mac.to_string());
+                ui::print_device_found(&pb, ip, &mac.to_string());
             }
             None => {}
         }
     }
+
     // pb.finish_with_message("🎉 Scan complete! 🎉");
 }
